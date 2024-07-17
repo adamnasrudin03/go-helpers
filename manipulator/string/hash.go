@@ -6,6 +6,7 @@ import (
 
 // HashPassword generates a hashed password from a plain text password using bcrypt.
 // The function returns the hashed password and an error if any.
+// check https://adamnasrudin.vercel.app/cheat-sheet/hash-validate-password
 func HashPassword(password string) (hashed string, err error) {
 	// Generate a hashed password from the plain text password using bcrypt.
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), 10)
@@ -19,6 +20,7 @@ func HashPassword(password string) (hashed string, err error) {
 
 // PasswordValid checks if a given plain text password matches the hashed password.
 // The function returns true if the passwords match, false otherwise.
+// check https://adamnasrudin.vercel.app/cheat-sheet/hash-validate-password
 func PasswordValid(hashPassword, password string) bool {
 	// Convert the hashed password and plain text password to byte slices.
 	hash, pass := []byte(hashPassword), []byte(password)
