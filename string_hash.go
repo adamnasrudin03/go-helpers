@@ -9,7 +9,7 @@ import (
 // check https://adamnasrudin.vercel.app/cheat-sheet/hash-validate-password
 func HashPassword(password string) (hashed string, err error) {
 	// Generate a hashed password from the plain text password using bcrypt.
-	hash, err := bcrypt.GenerateFromPassword([]byte(password), 10)
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
 	}
