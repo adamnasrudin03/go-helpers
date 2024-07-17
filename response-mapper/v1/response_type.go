@@ -3,7 +3,7 @@ package v1
 // ResponseDefault represents the default structure for response handling.
 type ResponseDefault struct {
 	Status  string      `json:"status"`
-	Message string      `json:"message,omitempty"`
+	Message interface{} `json:"message,omitempty"`
 	Meta    interface{} `json:"meta,omitempty"`
 	Data    interface{} `json:"data,omitempty"`
 }

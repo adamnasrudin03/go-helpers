@@ -54,6 +54,11 @@ func RenderJSON(w http.ResponseWriter, statusCode int, v interface{}) {
 			Meta:   paginate.Meta,
 			Data:   paginate.Data,
 		}
+	case MultiLanguages:
+		resp = ResponseDefault{
+			Status:  StatusMapping(statusCode),
+			Message: data,
+		}
 	case string:
 		resp = ResponseDefault{
 			Status:  StatusMapping(statusCode),

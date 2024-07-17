@@ -22,6 +22,17 @@ This is a response mapper http server for go-helpers.
 }
 ```
 
+### Success response Multiple message
+```json
+{
+  "status": "Created", // status success
+  "message": {
+    "id": "Data berhasil dibuat", // response message indonesian
+    "en": "Data created successfully" // response message english
+  }
+}
+```
+
 ### Success Single Data
 ```json
 {
