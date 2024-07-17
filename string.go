@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	charsetAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	charsetAll      = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()+,-.:;<=>?[]_{}"
+	CharsetAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	CharsetAll      = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()+,-.:;<=>?[]_{}"
 )
 
 // GenerateRandomString generates a random string of a specified length using the alphabet
@@ -21,7 +21,7 @@ const (
 // - A string of the specified length consisting of alphabet characters.
 func GenerateRandomString(length int) string {
 	// Define the charset for generating the random string
-	const charset = charsetAlphabet
+	const charset = CharsetAlphabet
 
 	// Create a seeded random number generator using the current time as the seed
 	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -49,7 +49,7 @@ func GenerateRandomString(length int) string {
 func GeneratePassword(length int) string {
 	// Define the charset for generating the password
 	// The charset includes lowercase letters, uppercase letters, numbers, and special characters
-	const charset = charsetAll
+	const charset = CharsetAll
 
 	// Create a strings.Builder to store the generated password
 	var password strings.Builder
