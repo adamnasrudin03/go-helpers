@@ -57,7 +57,7 @@ func RenderJSON(w http.ResponseWriter, statusCode int, v interface{}) {
 	case string:
 		resp = ResponseDefault{
 			Status:  StatusMapping(statusCode),
-			Message: v.(string),
+			Message: data,
 		}
 	default:
 		resp = ResponseDefault{
