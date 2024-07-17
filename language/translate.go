@@ -22,6 +22,8 @@ const (
 	Auto = "auto"
 )
 
+// defaultSourceLang returns the default source language if the given source language is empty.
+// The default source language is "auto".
 func defaultSourceLang(s string) string {
 	s = strings.TrimSpace(s)
 	if s == "" {
@@ -30,6 +32,8 @@ func defaultSourceLang(s string) string {
 	return s
 }
 
+// defaultTargetLang returns the default target language if the given target language is empty.
+// The default target language is the Indonesian language.
 func defaultTargetLang(s string) string {
 	s = strings.TrimSpace(s)
 	if s == "" {
@@ -38,34 +42,45 @@ func defaultTargetLang(s string) string {
 	return s
 }
 
+// Translate text from source language to target language
+// https://cloud.google.com/translate/automl/docs/reference/rest/v3/projects.locations/translateText
 func Translate(source, sourceLang, targetLang string) (string, error) {
+	// handle panic
 	defer go_helpers_error.PanicRecover("helpers-Translate")
 
+	// prepare variables
 	var (
 		translation []interface{}
 		text        []string
 	)
 
+	// encode source text
 	encodedSource := url.QueryEscape(source)
+
+	// prepare api url
 	url := fmt.Sprintf("https://translate.googleapis.com/translate_a/single?client=gtx&sl=%s&tl=%s&dt=t&q=%s",
 		defaultSourceLang(sourceLang), defaultTargetLang(targetLang), encodedSource)
 
+	// call api
 	resp, err := http.Get(url)
 	if err != nil {
 		return "", err
 	}
 	defer resp.Body.Close()
 
+	// read response body
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}
 
+	// unmarshal response body to struct
 	err = json.Unmarshal(body, &translation)
 	if err != nil {
 		return "", err
 	}
 
+	// loop through response body
 	if len(translation) > 0 {
 		inner := translation[0]
 		for _, slice := range inner.([]interface{}) {

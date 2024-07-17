@@ -1,5 +1,6 @@
 package v1
 
+// ResponseDefault represents the default structure for response handling.
 type ResponseDefault struct {
 	Status  string      `json:"status"`
 	Message string      `json:"message,omitempty"`
@@ -7,7 +8,7 @@ type ResponseDefault struct {
 	Data    interface{} `json:"data,omitempty"`
 }
 
-// Meta struct
+// Meta struct holds metadata information.
 type Meta struct {
 	Page         int `json:"page,omitempty"`
 	Limit        int `json:"limit,omitempty"`
@@ -15,16 +16,19 @@ type Meta struct {
 	TotalPages   int `json:"total_pages,omitempty"`
 }
 
+// Pagination represents the structure for paginating data.
 type Pagination struct {
 	Meta Meta
 	Data interface{}
 }
 
+// MultiLanguages represents a structure for multi-language support.
 type MultiLanguages struct {
 	ID string `json:"id"`
 	EN string `json:"en"`
 }
 
+// Error returns the error message in the preferred language.
 func (e *MultiLanguages) Error() string {
 	if e.EN != "" {
 		return e.EN
@@ -34,6 +38,7 @@ func (e *MultiLanguages) Error() string {
 	return "something went wrong"
 }
 
+// NewResponseMultiLang creates a new MultiLanguages instance.
 func NewResponseMultiLang(languages MultiLanguages) *MultiLanguages {
 	return &languages
 }

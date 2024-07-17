@@ -4,6 +4,7 @@ import (
 	"net/http"
 )
 
+// ResponseError is used to represent an error response to the client.
 type ResponseError struct {
 	Status  string         `json:"status"`
 	Code    int            `json:"code"`
@@ -11,8 +12,12 @@ type ResponseError struct {
 	Message MultiLanguages `json:"message"`
 }
 
+// NewError creates a new ResponseError from an error code and error.
+//
+// It sets the status, code, and message of the error based on the error code.
+// If the error is already a MultiLanguages, it uses the error's message.
+// If the error is not a MultiLanguages, it sets the ID and EN message to the error's message.
 func NewError(code TypeError, err error) *ResponseError {
-
 	var respErr MultiLanguages
 	if errValue, isMatch := err.(*MultiLanguages); isMatch {
 		if errValue != nil {
@@ -37,10 +42,12 @@ func NewError(code TypeError, err error) *ResponseError {
 	}
 }
 
+// Error returns the string representation of the error.
 func (e *ResponseError) Error() string {
 	return e.Err.Error()
 }
 
+// statusErrorMapping maps error codes to HTTP status codes.
 var statusErrorMapping = map[int]int{
 	int(ErrForbidden):    http.StatusForbidden,
 	int(ErrUnauthorized): http.StatusUnauthorized,
@@ -52,6 +59,9 @@ var statusErrorMapping = map[int]int{
 	int(ErrUnknown):      http.StatusInternalServerError,
 }
 
+// StatusErrorMapping returns the HTTP status code for the given error code.
+//
+// If the error code is not in the mapping, it returns http.StatusInternalServerError.
 func StatusErrorMapping(code int) int {
 	return statusErrorMapping[code]
 }
