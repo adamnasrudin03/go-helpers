@@ -1,14 +1,13 @@
 package v1
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"strings"
 
-	go_helpers_language "github.com/adamnasrudin03/go-helpers/language"
+	help "github.com/adamnasrudin03/go-helpers"
+	"github.com/adamnasrudin03/go-helpers/validators"
 	"github.com/go-playground/validator/v10"
-	"golang.org/x/text/language"
 )
 
 // StatusMapping maps HTTP status code to a descriptive string.
@@ -67,17 +66,12 @@ func FormatValidationError(err error) error {
 		msgEnUs = strings.TrimSpace(msgEnUs) + "."
 	}
 
-	// Define the language to translate to.
-	langTo := language.Indonesian.String()
-	// Define the language to translate from (auto detect).
-	auto := go_helpers_language.Auto
-
 	// Translate the error messages from English to Indonesian and store the translated messages in msgIdn.
-	msgIdn, errTranslate := go_helpers_language.Translate(auto, langTo, msgEnUs)
+	msgIdn, errTranslate := help.Translate(help.Auto, help.LangID, msgEnUs)
 	if errTranslate != nil {
 		// If there is an error during translation, log the error and set msgIdn equal to msgEnUs.
 		msgIdn = msgEnUs
-		log.Printf("Translate Text %v to %v error: %v \n", auto, langTo, errTranslate)
+		log.Printf("Translate Text %v to %v error: %v \n", help.Auto, help.LangID, errTranslate)
 	}
 
 	// Return a new error of type *ResponseError with the translated error messages.
@@ -97,41 +91,7 @@ func formatMessageValidator(errs validator.ValidationErrors) string {
 		if i > 0 {
 			msgEnUs.WriteString(", ")
 		}
-		msgEnUs.WriteString(formatMessageValidatorSingle(e))
+		msgEnUs.WriteString(validators.FormatErrorValidatorSingle(e))
 	}
 	return msgEnUs.String()
-}
-
-// formatMessageValidatorSingle formats a single validation error message.
-//
-// It takes a validator.FieldError and returns a string.
-func formatMessageValidatorSingle(e validator.FieldError) string {
-	// Extract relevant information from the error.
-	tag := e.Tag()
-	field := e.Field()
-	param := e.Param()
-
-	// Determine the error message based on the validation tag.
-	var msg string
-	switch tag {
-	case "required":
-		msg = fmt.Sprintf("%s is a required field", field)
-	case "email":
-		msg = fmt.Sprintf("%v must be an email address", field)
-	case "e164":
-		msg = fmt.Sprintf("%v must be a valid phone number in E.164 format", field)
-	case "gte":
-		msg = fmt.Sprintf("%v must be greater than or equal to %v", field, param)
-	case "lte":
-		msg = fmt.Sprintf("%v must be less than or equal to %v", field, param)
-	default:
-		msg = fmt.Sprintf("%v is %v %v", field, tag, param)
-	}
-
-	// Append "character" if the error is for a string field and a parameter is provided.
-	if param != "" && e.Type().Name() == "string" {
-		msg += " character"
-	}
-
-	return msg
 }

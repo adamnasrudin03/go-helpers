@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"net/http"
 
-	go_helpers_error "github.com/adamnasrudin03/go-helpers/error"
+	help "github.com/adamnasrudin03/go-helpers"
 )
 
 // WriteJSON writes the JSON representation of v to the response writer w,
 // and sets the status code of the response to statusCode. It returns an error
 // if there was an error during the operation.
 func WriteJSON(w http.ResponseWriter, statusCode int, v interface{}) error {
-	defer go_helpers_error.PanicRecover("response_mapper_v1-WriteJSON")
+	defer help.PanicRecover("response_mapper_v1-WriteJSON")
 
 	// Set the Content-Type header to application/json
 	w.Header().Set("Content-Type", "application/json")

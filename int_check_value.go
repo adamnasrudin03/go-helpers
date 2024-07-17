@@ -1,4 +1,4 @@
-package int
+package help
 
 // CheckArrayIntNil checks if the input array of integers is nil or empty. If not, it returns the input array.
 // If the input array is nil or empty, it returns an empty array.

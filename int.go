@@ -1,4 +1,4 @@
-package int
+package help
 
 import (
 	"math"

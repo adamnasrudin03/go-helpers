@@ -1,4 +1,4 @@
-package int
+package help
 
 // GetMinMaxInt64Array calculates the minimum and maximum values in an array of int64.
 //

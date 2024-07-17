@@ -1,4 +1,4 @@
-package language
+package help
 
 import (
 	"encoding/json"
@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"strings"
 
-	go_helpers_error "github.com/adamnasrudin03/go-helpers/error"
-	"github.com/adamnasrudin03/go-helpers/net/url"
 	"golang.org/x/text/language"
 )
 
@@ -46,7 +44,7 @@ func defaultTargetLang(s string) string {
 // https://cloud.google.com/translate/automl/docs/reference/rest/v3/projects.locations/translateText
 func Translate(source, sourceLang, targetLang string) (string, error) {
 	// handle panic
-	defer go_helpers_error.PanicRecover("helpers-Translate")
+	defer PanicRecover("language-Translate")
 
 	// prepare variables
 	var (
@@ -55,7 +53,7 @@ func Translate(source, sourceLang, targetLang string) (string, error) {
 	)
 
 	// encode source text
-	encodedSource := url.QueryEscape(source)
+	encodedSource := QueryEscape(source)
 
 	// prepare api url
 	url := fmt.Sprintf("https://translate.googleapis.com/translate_a/single?client=gtx&sl=%s&tl=%s&dt=t&q=%s",

@@ -1,4 +1,4 @@
-package net
+package help
 
 import (
 	"bytes"
@@ -8,8 +8,6 @@ import (
 	"log"
 	"net/http"
 	"time"
-
-	go_helpers_error "github.com/adamnasrudin03/go-helpers/error"
 )
 
 var (
@@ -85,7 +83,7 @@ func StreamToByte(stream io.Reader) []byte {
 // - statusCode: The HTTP status code of the response.
 // - err: An error if the request fails.
 func GetHTTPRequestJSON(ctx context.Context, method string, url string, body io.Reader, customTimeOut int, headers ...map[string]string) (res []byte, statusCode int, err error) {
-	defer go_helpers_error.PanicRecover("net-GetHTTPRequestJSON")
+	defer PanicRecover("net-GetHTTPRequestJSON")
 
 	// Create an HTTP request with the given method, URL, and body.
 	req, err := http.NewRequest(method, url, body)
@@ -148,7 +146,7 @@ func GetHTTPRequestJSON(ctx context.Context, method string, url string, body io.
 // - statusCode: The HTTP status code of the response.
 // - err: An error if the request fails.
 func GetHTTPRequestSkipVerify(ctx context.Context, method string, url string, body io.Reader, customTimeOut int, headers ...map[string]string) (res []byte, statusCode int, err error) {
-	defer go_helpers_error.PanicRecover("net-GetHTTPRequestSkipVerify")
+	defer PanicRecover("net-GetHTTPRequestSkipVerify")
 
 	// Create an HTTP request with the given method, URL, and body.
 	req, err := http.NewRequest(method, url, body)

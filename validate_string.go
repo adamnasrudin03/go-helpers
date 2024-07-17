@@ -1,4 +1,4 @@
-package validate
+package help
 
 import (
 	"net/mail"
