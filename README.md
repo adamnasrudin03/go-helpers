@@ -41,7 +41,7 @@ This is a helper library for the GoLang project.
 | JsonToStruct									| Unmarshals a json string to a struct. If the Unmarshal process is failed, it will return the original Marshal result and the error.																	|
 | JsonToString									| Marshals a struct to json string. If the Marshal process is failed, it will return the original Marshal result and the error.																				|
 
-### TimeUTC7 helpers (see [TimeUTC7](time_utc7.go))
+### TimeUTC+7 helpers (see [TimeUTC7](time_utc7.go))
 
 ### Response mapper
 - See [Response mapper v1](https://github.com/adamnasrudin03/go-helpers/tree/main/response-mapper/v1#structure-response-api)
