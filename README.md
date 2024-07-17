@@ -14,10 +14,15 @@ This is a helper library for the GoLang project.
 | GenerateRandomString					| Generates a random string of a specified length using the alphabet characters. It uses the current time as a seed for the random number generator.									|
 | GeneratePassword							| Generates a random password of a specified length using a combination of lowercase letters, uppercase letters, numbers, and special characters.											|
 | HashPassword									| Generates a hashed password from a plain text password using bcrypt. The function returns the hashed password and an error if any.																	|
+| GenerateUUID									| Generates a new V7 (random) UUID. The function returns the generated UUID and an error if any.																																			|
 | PasswordIsValid								| Checks if a given plain text password matches the hashed password. The function returns true if the passwords match, false otherwise.																|
 | CheckStringValue							| Checks if a given string is not empty. The function returns true if the string is not empty, false otherwise.																												|
 | CheckStringValueToPointer 		| Checks if a given string is not empty and returns a pointer to the string. The function returns a pointer to the string if the string is not empty, nil otherwise.	|
 | Translate											| Translates a given string from source language to target language. The function returns the translated string and an error if any.																	|
+| IsUUID												| Checks if the given string is a valid UUID. The function returns true if the string is a valid UUID, false otherwise.																								|
+| IsEmail												| Checks if the given string is a valid email. The function returns true if the string is a valid email, false otherwise.																							|
+| IsNumber											| Checks if the given string is a valid number. The function returns true if the string is a valid number, false otherwise.																						|
+| IsPhoneNumberId								| Checks if the given string is a valid phone number ID. The function returns true if the string is a valid phone number ID, false otherwise.													|
 
 ### Number helpers
 
