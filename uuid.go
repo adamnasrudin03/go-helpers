@@ -5,6 +5,7 @@ import "github.com/google/uuid"
 // GenerateUUID generates a new UUID v7
 //
 // It returns a UUID v7 and an error, if any.
+// see https://adamnasrudin.vercel.app/cheat-sheet/generate-uuid-in-golang
 func GenerateUUID() (uuid.UUID, error) {
 	// Generate a new V7 (random) UUID
 	// We use V7 for it's shorter length and it's use for
