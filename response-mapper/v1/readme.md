@@ -63,11 +63,11 @@ func main() {
 		w.Header().Set("content-type", "application/json")
 		switch {
 		case r.URL.Path == "/" && r.Method == "GET":
-		  response_mapper.RenderJSON(w, http.StatusOK, "welcome this server") // success response
+			response_mapper.RenderJSON(w, http.StatusOK, "welcome this server") // success response
 
 		default:
-      err := response_mapper.ErrRouteNotFound()
-      response_mapper.RenderJSON(w, http.StatusNotFound, err) // error response
+			err := response_mapper.ErrRouteNotFound()
+			response_mapper.RenderJSON(w, http.StatusNotFound, err) // error response
 		}
 	})
 
@@ -77,4 +77,5 @@ func main() {
 		log.Fatal(err)
 	}
 }
+
 ```
