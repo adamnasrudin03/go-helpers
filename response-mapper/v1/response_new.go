@@ -24,7 +24,12 @@ func WriteJSON(w http.ResponseWriter, statusCode int, v interface{}) error {
 
 func RenderJSON(w http.ResponseWriter, statusCode int, v interface{}) {
 	if val, isErr := v.(error); isErr {
-		statusCode = StatusCodeMapping(statusCode, val)
+		if e, ok := val.(*ResponseError); ok {
+			statusCode = StatusErrorMapping(e.Code)
+		} else {
+			val = NewError(ErrUnknown, val)
+		}
+
 		_ = WriteJSON(w, statusCode, val)
 		return
 	}
@@ -50,11 +55,4 @@ func RenderJSON(w http.ResponseWriter, statusCode int, v interface{}) {
 		}
 	}
 	_ = WriteJSON(w, statusCode, resp)
-}
-
-func StatusCodeMapping(statusCode int, v interface{}) int {
-	if e, ok := v.(*ResponseError); ok {
-		statusCode = StatusErrorMapping(e.Code)
-	}
-	return statusCode
 }

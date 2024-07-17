@@ -33,3 +33,11 @@ func ErrRouteNotFound() *ResponseError {
 			EN: "Route not found",
 		}))
 }
+
+func ErrInternalServerError() *ResponseError {
+	return NewError(ErrUnknown, NewResponseMultiLang(
+		MultiLanguages{
+			ID: "Internal Server Error",
+			EN: "Internal Server Error",
+		}))
+}

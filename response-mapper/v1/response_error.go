@@ -41,26 +41,17 @@ func (e *ResponseError) Error() string {
 	return e.Err.Error()
 }
 
-func StatusErrorMapping(code int) int {
-	statusCode := 0
-	switch code {
-	case int(ErrForbidden):
-		statusCode = http.StatusForbidden
-	case int(ErrUnauthorized):
-		statusCode = http.StatusUnauthorized
-	case int(ErrDatabase):
-		statusCode = http.StatusUnprocessableEntity
-	case int(ErrFromUseCase):
-		statusCode = http.StatusUnprocessableEntity
-	case int(ErrConflict):
-		statusCode = http.StatusConflict
-	case int(ErrValidation):
-		statusCode = http.StatusBadRequest
-	case int(ErrNoFound):
-		statusCode = http.StatusNotFound
-	default:
-		statusCode = http.StatusInternalServerError
-	}
+var statusErrorMapping = map[int]int{
+	int(ErrForbidden):    http.StatusForbidden,
+	int(ErrUnauthorized): http.StatusUnauthorized,
+	int(ErrDatabase):     http.StatusUnprocessableEntity,
+	int(ErrFromUseCase):  http.StatusUnprocessableEntity,
+	int(ErrConflict):     http.StatusConflict,
+	int(ErrValidation):   http.StatusBadRequest,
+	int(ErrNoFound):      http.StatusNotFound,
+	int(ErrUnknown):      http.StatusInternalServerError,
+}
 
-	return statusCode
+func StatusErrorMapping(code int) int {
+	return statusErrorMapping[code]
 }
