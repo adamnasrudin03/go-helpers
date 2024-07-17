@@ -15,8 +15,28 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
 
 # Go workspace file
 go.work
 go.work.sum
+
+
+# Directories and files to ignore in the project
+# Directories:
+# Environment variables
+.env
+# IntelliJ IDEA project files
+.idea
+# Debug files
+__debug*
+# VS Code project files
+.vscode
+
+# Files:
+# Apple file system file
+.DS_Store 
+# Coverage report file
+coverage.txt 
+# Logrus log file
+logrus.log 
