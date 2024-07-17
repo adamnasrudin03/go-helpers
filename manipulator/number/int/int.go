@@ -13,6 +13,7 @@ import (
 //
 // Returns:
 // - A randomly generated number within the specified range.
+// see https://adamnasrudin.vercel.app/cheat-sheet/generate-random-number-using-golang
 func GenerateRandomNumber(length int) int {
 	// Generate a random number within the range of 10^length
 	// using the math/rand package.
