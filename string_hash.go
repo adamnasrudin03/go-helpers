@@ -18,10 +18,10 @@ func HashPassword(password string) (hashed string, err error) {
 	return string(hash), nil
 }
 
-// PasswordValid checks if a given plain text password matches the hashed password.
+// PasswordIsValid checks if a given plain text password matches the hashed password.
 // The function returns true if the passwords match, false otherwise.
 // check https://adamnasrudin.vercel.app/cheat-sheet/hash-validate-password
-func PasswordValid(hashPassword, password string) bool {
+func PasswordIsValid(hashPassword, password string) bool {
 	// Convert the hashed password and plain text password to byte slices.
 	hash, pass := []byte(hashPassword), []byte(password)
 
