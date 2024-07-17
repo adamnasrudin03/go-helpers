@@ -27,3 +27,31 @@ func GenerateRandomNumber(length int) int {
 	// Return the generated random number.
 	return num
 }
+
+// GetMinMaxIntArray calculates the minimum and maximum values in an array of Int.
+//
+// Parameters:
+// - params: An array of Int values.
+//
+// Returns:
+// - min: The minimum value in the array.
+// - max: The maximum value in the array.
+func GetMinMaxIntArray(params []int) (min int, max int) {
+	// Initialize min and max with the first value in the array.
+	if len(params) > 0 {
+		min = params[0]
+		max = params[0]
+	}
+
+	// Iterate over the array and update min and max if necessary.
+	for _, value := range params {
+		if value < min {
+			min = value
+		}
+		if value > max {
+			max = value
+		}
+	}
+
+	return min, max
+}
