@@ -13,8 +13,8 @@ This is a helper library for the GoLang project.
 | [ToTitle](#ToTitle)  																				| Converts a given string to title case or Capitalized Each Word. 																																																		|
 | [GenerateRandomString](#GenerateRandomString)								| Generates a random string of a specified length using the alphabet characters. It uses the current time as a seed for the random number generator.									|
 | [GeneratePassword](#GeneratePassword)												| Generates a random password of a specified length using a combination of lowercase letters, uppercase letters, numbers, and special characters.											|
-| [HashPassword](#HashPassword)																| Generates a hashed password from a plain text password using bcrypt. The function returns the hashed password and an error if any.																	|
 | [GenerateUUID](#GenerateUUID)																| Generates a new V7 (random) UUID. The function returns the generated UUID and an error if any.																																			|
+| [HashPassword](#HashPassword)																| Generates a hashed password from a plain text password using bcrypt. The function returns the hashed password and an error if any.																	|
 | [PasswordIsValid](#PasswordIsValid)													| Checks if a given plain text password matches the hashed password. The function returns true if the passwords match, false otherwise.																|
 | [CheckStringValue](#CheckStringValue)												| Checks if a given string is not empty. The function returns true if the string is not empty, false otherwise.																												|
 | [CheckStringValueToPointer](#CheckStringValueToPointer) 		| Checks if a given string is not empty and returns a pointer to the string. The function returns a pointer to the string if the string is not empty, nil otherwise.	|
@@ -35,28 +35,41 @@ This is a helper library for the GoLang project.
 | [GetMinMaxIntArray](#GetMinMaxIntArray)					| Get the minimum and maximum values in an array of int. The function returns the minimum and maximum values as a tuple.																							|
 | [CheckArrayFloat64Nil](#CheckArrayFloat64Nil)		| Checks if the input array of float64 is nil or empty. If not, it returns the input array. If the input array is nil or empty, it returns an empty array.						|
 | [CheckFloat64Value](#CheckFloat64Value)					| Checks if the input pointer to a float64 is nil or empty. If not, it returns the value of the input pointer. If the input pointer is nil, it returns 0.0.						|
-| [CheckArrayFloat32Nil](#CheckArrayFloat32Nil)		| Checks if the input array of float32 is nil or empty. If not, it returns the input array. If the input array is nil or empty, it returns an empty array.						|
-| [CheckFloat32Value](#CheckFloat32Value)					| Checks if the input pointer to a float32 is nil or empty. If not, it returns the value of the input pointer. If the input pointer is nil, it returns 0.0.						|
 
 ### Json helpers
 
 | Functions																					| Description																																																																													|
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [SafeJsonMarshal](#SafeJsonMarshal) 							| Marshals a given data to json. If the Marshal process is failed, it will return the original Marshal result and the error.																					|
-| [JsonToStruct](#JsonToStruct)											| Unmarshals a json string to a struct. If the Unmarshal process is failed, it will return the original Marshal result and the error.																	|
+| [JsonToStruct](#JsonToStruct)											| UnMarshals a json string to a struct. If the UnMarshal process is failed, it will return the original Marshal result and the error.																	|
 | [JsonToString](#JsonToString)											| Marshals a struct to json string. If the Marshal process is failed, it will return the original Marshal result and the error.																				|
 
-### TimeUTC+7 helpers (see [TimeUTC7](time_utc7.go))
+### Net helpers
 
+| Functions																							| Description			|
+| ------------------------------------------------------| --------------- |
+| [QueryEscape](#QueryEscape) 													| Escape a string for use in a URL query.	|
+| [StreamToString](#StreamToString) 										| Reads the entire contents of an io.Reader and returns it as a string.	|
+| [StreamToByte](#StreamToByte) 												| Reads the entire contents of an io.Reader and returns it as a byte slice.	|
+| [GetHTTPRequestJSON](#GetHTTPRequestJSON)							| Sends an HTTP request with the given method, URL, body, and timeout, and returns the response as a byte slice. The function takes an optional set of headers to include with the request.	|
+| [GetHTTPRequestSkipVerify](#GetHTTPRequestSkipVerify) | Sends an HTTP request with the given method, URL, body, and timeout, and returns the response as a byte slice. The function takes an optional set of headers to include with the request.	|
+
+
+### Time helpers
+- [TimeUTC+7](#TimeUTC7) ( [see detail](time_utc7.go))
+  
+  
 ### Response mapper
-- See [Response mapper v1](https://github.com/adamnasrudin03/go-helpers/tree/main/response-mapper/v1#structure-response-api)
+- See [Response mapper v1](https://github.com/adamnasrudin03/go-helpers/tree/main/response-mapper/v1#structure-response-api).
+- Soon next version variant response structure.
 
-### Validator helpers
+### Others
 
 | Functions																										| Description																																																																																	|
 | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [FormatErrorValidator](#FormatErrorValidator)								| Formats multiple validation error messages. It takes a slice of validator.ValidationErrors and returns a slice of strings, where each string is a formatted error message.	|
 | [FormatErrorValidatorSingle](#FormatErrorValidatorSingle)		| Formats a single validation error message. It takes a validator.ValidationErrors and returns a formatted error message.																											|
+| [PanicRecover](#PanicRecover)																| This function is used to recover from a panic. It takes a string as an argument and prints it to the console.	|	
 
 
 ## Installation
@@ -66,7 +79,6 @@ This is a helper library for the GoLang project.
 
 ## Usage
 Check in go playground: https://go.dev/play/p/Qidzj-zwSa1
-
 ```go
 package main
 
@@ -84,3 +96,11 @@ func main() {
 }
 
 ```
+other examples: https://github.com/adamnasrudin03/go-helpers/tree/main/examples
+
+
+## How to Contribute
+Make a pull request...
+
+## License
+Distributed under MIT License, please see license file within the code for more details.

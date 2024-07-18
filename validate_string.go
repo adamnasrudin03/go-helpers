@@ -64,7 +64,17 @@ func IsNumber(input string) bool {
 //
 // Returns:
 // - A boolean indicating whether the string is a valid phone number or not.
+//
+// The function first removes any whitespace or dashes from the input string.
+// Then it trims any non-digit characters from the input string, keeping only the
+// digit characters and the "+" character, which is used to indicate the country
+// code.
+// The trimmed string is then matched against a regular expression pattern.
+// If the trimmed string matches the pattern, the function returns true, otherwise
+// it returns false.
 func IsPhoneNumberId(input string) bool {
+	input = strings.ReplaceAll(input, " ", "")
+	input = strings.ReplaceAll(input, "-", "")
 	// The pattern to match the phone number. It should start with "+" or "62" or "0", followed by "8" and then 9 digits.
 	pattern := `^(\+62|62|0)(8)\d{9}$`
 
