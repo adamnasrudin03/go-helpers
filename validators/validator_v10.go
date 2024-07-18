@@ -49,6 +49,14 @@ func FormatErrorValidatorSingle(e validator.FieldError) string {
 		msg = fmt.Sprintf("%v must be greater than or equal to %v", field, param)
 	case "lte":
 		msg = fmt.Sprintf("%v must be less than or equal to %v", field, param)
+	case "gt":
+		msg = fmt.Sprintf("%v must be greater than to %v", field, param)
+	case "lt":
+		msg = fmt.Sprintf("%v must be less than to %v", field, param)
+	case "eq":
+		msg = fmt.Sprintf("%v must be equals to %v", field, param)
+	case "eq_ignore_case":
+		msg = fmt.Sprintf("%v must be equals ignoring case to %v", field, param)
 	default:
 		msg = fmt.Sprintf("%v is %v %v", field, tag, param)
 	}
