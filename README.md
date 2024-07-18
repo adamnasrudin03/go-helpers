@@ -97,3 +97,10 @@ func main() {
 
 ```
 other examples: https://github.com/adamnasrudin03/go-helpers/tree/main/examples
+
+
+## How to Contribute
+Make a pull request...
+
+## License
+Distributed under MIT License, please see license file within the code for more details.
