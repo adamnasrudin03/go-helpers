@@ -83,23 +83,23 @@ func (t *TimeUTC7) EndDate(input time.Time) time.Time {
 // StartDateInString parses a given date string to find the start of the day (00:00:00) in UTC+7.
 //
 // Parameters:
-// - input: The date string to parse.
+// - inputDate: The date string to parse.
 //
 // Returns:
 // - A time.Time value representing the start of the day for the parsed date in UTC+7.
-func (t *TimeUTC7) StartDateInString(input string) time.Time {
-	startOfDay, _ := t.ParseUTC7(FormatDate, input) // Parse the date string to get the start of the day.
+func (t *TimeUTC7) StartDateInString(inputDate string) time.Time {
+	startOfDay, _ := t.ParseUTC7(FormatDate, inputDate) // Parse the date string to get the start of the day.
 	return startOfDay
 }
 
 // EndDateInString parses a given date string to find the end of the day (23:59:59) in UTC+7.
 //
 // Parameters:
-// - input: The date string to parse.
+// - inputDate: The date string to parse.
 //
 // Returns:
 // - A time.Time value representing the end of the day for the parsed date in UTC+7.
-func (t *TimeUTC7) EndDateInString(input string) time.Time {
-	endOfDay := t.StartDateInString(input).Add(23*time.Hour + 59*time.Minute + 59*time.Second) // Calculate 23:59:59 of the parsed date.
+func (t *TimeUTC7) EndDateInString(inputDate string) time.Time {
+	endOfDay := t.StartDateInString(inputDate).Add(23*time.Hour + 59*time.Minute + 59*time.Second) // Calculate 23:59:59 of the parsed date.
 	return endOfDay
 }
