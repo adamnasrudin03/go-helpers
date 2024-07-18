@@ -25,16 +25,22 @@ func FormatErrorValidator(errs validator.ValidationErrors) []string {
 
 // FormatErrorValidatorSingle formats a single validation error message.
 //
-// It takes a validator.FieldError and returns a string.
-// The function extracts relevant information from the error,
-// determines the error message based on the validation tag,
-// and appends "character" if the error is for a string field and a parameter is provided.
-// The function returns the formatted error message.
+// It takes a validator.FieldError object as input and returns a string representing the formatted error message.
+// The function extracts relevant information from the error object, including the validation tag, field name, validation parameter, and field type.
+// It then determines the appropriate error message based on the validation tag and constructs the message accordingly.
+// Additionally, if the error is related to a string field and a parameter is provided, the function appends "character" to the error message.
+//
+// Parameters:
+// - e: A validator.FieldError object containing information about the specific validation error.
+//
+// Returns:
+// - A string containing the formatted error message based on the error details.
 func FormatErrorValidatorSingle(e validator.FieldError) string {
-	// Extract relevant information from the error.
-	tag := e.Tag()     // Validation tag.
-	field := e.Field() // Field name.
-	param := e.Param() // Validation parameter.
+	// Extract relevant information from the error object.
+	tag := e.Tag()               // Obtain the validation tag associated with the error.
+	field := e.Field()           // Retrieve the name of the field where the validation error occurred.
+	param := e.Param()           // Get the validation parameter provided in the error.
+	fieldType := e.Type().Name() // Determine the type of the field where the error occurred.
 
 	// Determine the error message based on the validation tag.
 	var msg string
@@ -50,19 +56,19 @@ func FormatErrorValidatorSingle(e validator.FieldError) string {
 	case "lte":
 		msg = fmt.Sprintf("%v must be less than or equal to %v", field, param)
 	case "gt":
-		msg = fmt.Sprintf("%v must be greater than to %v", field, param)
+		msg = fmt.Sprintf("%v must be greater than %v", field, param)
 	case "lt":
-		msg = fmt.Sprintf("%v must be less than to %v", field, param)
+		msg = fmt.Sprintf("%v must be less than %v", field, param)
 	case "eq":
-		msg = fmt.Sprintf("%v must be equals to %v", field, param)
+		msg = fmt.Sprintf("%v must be equal to %v", field, param)
 	case "eq_ignore_case":
-		msg = fmt.Sprintf("%v must be equals ignoring case to %v", field, param)
+		msg = fmt.Sprintf("%v must be equal to %v (ignoring case)", field, param)
 	default:
 		msg = fmt.Sprintf("%v is %v %v", field, tag, param)
 	}
 
 	// Append "character" if the error is for a string field and a parameter is provided.
-	if param != "" && e.Type().Name() == "string" {
+	if param != "" && fieldType == "string" {
 		msg += " character"
 	}
 
