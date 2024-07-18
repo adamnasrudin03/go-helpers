@@ -26,15 +26,10 @@ func exampleCheckValue() {
 	fmt.Println(help.CheckIntValue(nil))
 	fmt.Println(help.CheckIntValue(&a))
 
-	fmt.Println(help.CheckArrayFloat32Nil(nil))
+	fmt.Println(help.CheckArrayFloat64Nil(nil))
 	b := float64(1.23)
 	fmt.Println(help.CheckFloat64Value(nil))
 	fmt.Println(help.CheckFloat64Value(&b))
-
-	fmt.Println(help.CheckArrayFloat32Nil(nil))
-	c := float32(12.3)
-	fmt.Println(help.CheckFloat32Value(nil))
-	fmt.Println(help.CheckFloat32Value(&c))
 }
 
 func main() {

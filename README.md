@@ -35,8 +35,6 @@ This is a helper library for the GoLang project.
 | [GetMinMaxIntArray](#GetMinMaxIntArray)					| Get the minimum and maximum values in an array of int. The function returns the minimum and maximum values as a tuple.																							|
 | [CheckArrayFloat64Nil](#CheckArrayFloat64Nil)		| Checks if the input array of float64 is nil or empty. If not, it returns the input array. If the input array is nil or empty, it returns an empty array.						|
 | [CheckFloat64Value](#CheckFloat64Value)					| Checks if the input pointer to a float64 is nil or empty. If not, it returns the value of the input pointer. If the input pointer is nil, it returns 0.0.						|
-| [CheckArrayFloat32Nil](#CheckArrayFloat32Nil)		| Checks if the input array of float32 is nil or empty. If not, it returns the input array. If the input array is nil or empty, it returns an empty array.						|
-| [CheckFloat32Value](#CheckFloat32Value)					| Checks if the input pointer to a float32 is nil or empty. If not, it returns the value of the input pointer. If the input pointer is nil, it returns 0.0.						|
 
 ### Json helpers
 
