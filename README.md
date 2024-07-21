@@ -29,7 +29,7 @@ This is a helper library for the GoLang project.
 | Functions	| Description	|
 | - | - |
 | RoundUpFloat | Rounds up the given float64 to the given uint precision. For example, if the input is 12.345 and the precision is 2, this function will return 12.35.	|
-| RoundDownFloat  Rounds down the given float64 to the given uint precision. For example, if the input is 12.345 and the precision is 2, this function will return 12.34.|
+| RoundDownFloat | Rounds down the given float64 to the given uint precision. For example, if the input is 12.345 and the precision is 2, this function will return 12.34.|
 | RoundFloat | Rounds the given float64 to the given uint precision, based on the rounding mode. The rounding mode is determined by the roundingUp parameter.	|
 | GenerateRandomNumber | Generates a random number within a specified length. The length parameter determines the maximum value of the generated number.		|
 | GetMinMaxIntArray | Get the minimum and maximum values in an array of int. The function returns the minimum and maximum values as a tuple.		|
