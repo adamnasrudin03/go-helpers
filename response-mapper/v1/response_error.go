@@ -61,7 +61,24 @@ var statusErrorMapping = map[int]int{
 
 // StatusErrorMapping returns the HTTP status code for the given error code.
 //
-// If the error code is not in the mapping, it returns http.StatusInternalServerError.
+// It checks if the error code is present in the statusErrorMapping and returns the corresponding
+// HTTP status code. If the error code is not found in the mapping, it returns
+// http.StatusInternalServerError.
+//
+// Parameters:
+// - code: The error code to look up in the mapping.
+//
+// Returns:
+// - int: The corresponding HTTP status code for the error code.
 func StatusErrorMapping(code int) int {
-	return statusErrorMapping[code]
+	// Look up the error code in the statusErrorMapping.
+	val, ok := statusErrorMapping[code]
+
+	// If the error code is not found in the mapping, return the error code itself.
+	if !ok {
+		return http.StatusInternalServerError
+	}
+
+	// Return the corresponding HTTP status code.
+	return val
 }
