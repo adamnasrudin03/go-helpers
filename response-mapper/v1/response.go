@@ -19,12 +19,12 @@ import (
 // Returns:
 // - string: The descriptive string for the given HTTP status code.
 //
-// The function first defines a map to store custom status code mappings.
+// This function first defines a map to store custom status code mappings.
 // It then checks if the given status code has a custom mapping.
 // If it does, it returns the corresponding descriptive string.
 // If not, it uses the default status text for the given status code.
 // It then trims any leading or trailing white spaces from the status string.
-// If the status string is still empty, it maps the status code to a default status code
+// If the status string is still empty after all these operations, it maps the status code to a default status code
 // and returns the corresponding descriptive string.
 func StatusMapping(statusCode int) string {
 	// Define a map to store custom status code mappings.
@@ -43,11 +43,11 @@ func StatusMapping(statusCode int) string {
 	// Trim any leading or trailing white spaces from the status string.
 	status = strings.TrimSpace(status)
 
-	// If the status string is empty, map the status code to a default status code
+	// If the status string is empty after all these operations, map the status code to a default status code
 	// and return the corresponding descriptive string.
 	if status == "" {
 		statusCode = StatusErrorMapping(statusCode)
-		status = mappingsCustomStatus[statusCode]
+		status = http.StatusText(statusCode)
 	}
 
 	// Return the mapped status string.
