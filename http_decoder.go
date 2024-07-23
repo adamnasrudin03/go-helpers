@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	// MaxMemory is the maximum size of the request body.
+	// maxMemory is the maximum size of the request body.
 	maxMemory = 4 << 20 // 4 MB
-	// JSONTag is the tag name for conform parsing.
+	// jsonTag is the tag name for conform parsing.
 	jsonTag = "json"
 )
 
