@@ -1,3 +1,4 @@
+// Package help provides utilities for handling HTTP requests.
 package help
 
 import (
@@ -8,6 +9,7 @@ import (
 	"github.com/go-playground/form"
 )
 
+// Constants for HTTP decoder.
 const (
 	// maxMemory is the maximum size of the request body.
 	maxMemory = 4 << 20 // 4 MB
@@ -25,9 +27,18 @@ type OptionDecoder struct {
 
 // HttpDecoder is the interface that decodes HTTP requests.
 type HttpDecoder interface {
+	// SetMaxSize sets the maximum size of the request body.
+	// The parameter limit is the maximum size in bytes.
+	SetMaxSize(limit int64)
+
+	// SetTagName sets the tag name for conform parsing.
+	// The parameter tag is the name of the tag.
+	SetTagName(tag string)
+
 	// Body decodes the request body into the given interface.
 	// It supports JSON and form data.
 	Body(r *http.Request, i interface{}, fns ...OptionDecoder) error
+
 	// Query decodes the query parameters into the given interface.
 	Query(r *http.Request, i interface{}, fns ...OptionDecoder) error
 }
@@ -38,7 +49,7 @@ type decoder struct {
 	tagName string // The tag name for conform parsing.
 }
 
-// NewHttpDecoder creates a new HttpDecoder.
+// NewHttpDecoder creates a new HttpDecoder with default settings.
 func NewHttpDecoder() HttpDecoder {
 	return &decoder{
 		maxSize: maxMemory,
@@ -59,9 +70,10 @@ func (c *decoder) SetTagName(tag string) {
 // Body decodes the request body into the given interface.
 // It supports JSON and form data.
 //
-// r: the http.Request object.
-// i: the interface to decode into.
-// fns: the list of OptionDecoder configurations.
+// Parameters:
+// - r: the http.Request object.
+// - i: the interface to decode into.
+// - fns: the list of OptionDecoder configurations.
 // Returns an error if decoding fails.
 func (c *decoder) Body(r *http.Request, i interface{}, fns ...OptionDecoder) error {
 	if r.Body == nil {
@@ -95,9 +107,10 @@ func (c *decoder) Body(r *http.Request, i interface{}, fns ...OptionDecoder) err
 
 // Query decodes the query parameters into the given interface.
 //
-// r: the http.Request object.
-// i: the interface to decode into.
-// fns: the list of OptionDecoder configurations.
+// Parameters:
+// - r: the http.Request object.
+// - i: the interface to decode into.
+// - fns: the list of OptionDecoder configurations.
 // Returns an error if decoding fails.
 func (c *decoder) Query(r *http.Request, i interface{}, fns ...OptionDecoder) error {
 	d := form.NewDecoder()
