@@ -76,32 +76,42 @@ func (c *decoder) SetTagName(tag string) {
 // - fns: the list of OptionDecoder configurations.
 // Returns an error if decoding fails.
 func (c *decoder) Body(r *http.Request, i interface{}, fns ...OptionDecoder) error {
+	// If the request body is empty, return nil.
 	if r.Body == nil {
 		return nil
 	}
 	defer r.Body.Close()
 
+	// Get the content type from the request header.
 	ct := r.Header.Get("Content-Type")
+
+	// If the content type is JSON, decode the JSON body.
 	if strings.HasPrefix(ct, "application/json") || strings.HasPrefix(ct, "text/json") {
 		if err := json.NewDecoder(r.Body).Decode(i); err != nil {
 			return err
 		}
-	} else if strings.HasPrefix(ct, "multipart/form-data") {
+	} else if strings.HasPrefix(ct, "multipart/form-data") { // If the content type is multipart/form-data, parse the multipart form.
 		if err := r.ParseMultipartForm(c.maxSize); err != nil {
 			return err
 		}
-	} else {
+	} else { // For other content types, parse the form.
 		if err := r.ParseForm(); err != nil {
 			return err
 		}
 	}
 
+	// Create a new form decoder.
 	d := form.NewDecoder()
+
+	// Set the tag name for conform parsing.
 	d.SetTagName(c.tagName)
+
+	// Register custom type functions.
 	for _, v := range fns {
 		d.RegisterCustomTypeFunc(v.Func, v.Types...)
 	}
 
+	// Decode the form into the given interface.
 	return d.Decode(i, r.Form)
 }
 
@@ -113,11 +123,17 @@ func (c *decoder) Body(r *http.Request, i interface{}, fns ...OptionDecoder) err
 // - fns: the list of OptionDecoder configurations.
 // Returns an error if decoding fails.
 func (c *decoder) Query(r *http.Request, i interface{}, fns ...OptionDecoder) error {
+	// Create a new form decoder
 	d := form.NewDecoder()
+
+	// Set the tag name for conform parsing
 	d.SetTagName(c.tagName)
+
+	// Register custom type functions
 	for _, v := range fns {
 		d.RegisterCustomTypeFunc(v.Func, v.Types...)
 	}
 
+	// Decode the query parameters into the given interface
 	return d.Decode(i, r.URL.Query())
 }
