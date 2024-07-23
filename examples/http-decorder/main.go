@@ -13,15 +13,15 @@ import (
 // The struct tags are used to determine which query parameters belong to which fields.
 // The struct tags are in the format "query:<key>".
 type listReq struct {
-	Limit      int       `query:"limit"`         // The maximum number of items to return.
-	Offset     int       `query:"offset"`        // The number of items to skip before starting to collect the result set.
-	Page       int       `query:"page"`          // The page number of results to return.
-	OrderBy    string    `query:"order_by"`      // The field to order the results by.
-	SortBy     string    `query:"sort_by"`       // The direction to sort the results by.
-	IsNoLimit  bool      `query:"is_no_limit"`   // A flag indicating whether to limit the number of items returned.
-	Total      float64   `query:"total"`         // The total number of items available.
-	Date       string    `query:"date" json:"-"` // The date in string format.
-	DateInTime time.Time `json:"date"`           // The date in time.Time format.
+	Total      float64   `json:"total"` // The total number of items available.
+	Date       string    `json:"date"`  // The date in string format.
+	DateInTime time.Time `json:"-"`
+	Limit      int       `json:"limit"`       // The maximum number of items to return.
+	Offset     int       `json:"offset"`      // The number of items to skip before starting to collect the result set.
+	Page       int       `json:"page"`        // The page number of results to return.
+	OrderBy    string    `json:"order_by"`    // The field to order the results by.
+	SortBy     string    `json:"sort_by"`     // The direction to sort the results by.
+	IsNoLimit  bool      `json:"is_no_limit"` // A flag indicating whether to limit the number of items returned.
 }
 
 // APIResponse sends a JSON response with the given data and status code.
@@ -49,16 +49,16 @@ func APIResponse(w http.ResponseWriter, r *http.Request, data interface{}, code 
 // - w: The http.ResponseWriter to write the response to.
 // - r: The http.Request object.
 func ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	// Create a new instance of the listReq struct
 	input := listReq{}
-	query := r.URL.Query()
+	decoder := help.NewHttpDecoder()
 
 	// Decode the query parameters into the listReq struct
-	err := help.NewQueryDecoder(query).Decode(&input)
+	err := decoder.Query(r, &input)
 	if err != nil {
 		APIResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
 	}
+
 	input.DateInTime, err = time.Parse(time.DateOnly, input.Date)
 	if err != nil {
 		APIResponse(w, r, err.Error(), http.StatusBadRequest)
@@ -76,18 +76,24 @@ func ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // - w: The http.ResponseWriter to write the response to.
 // - r: The http.Request object.
 func ServeHTTP2(w http.ResponseWriter, r *http.Request) {
-	var isNoLimit bool
-	query := r.URL.Query()
+	input := listReq{}
+	decoder := help.NewHttpDecoder()
 
-	// Decode the "is_no_limit" query parameter into a boolean variable
-	err := help.NewQueryDecoder(query).DecodeField("is_no_limit", &isNoLimit)
+	// Decode the query parameters into the listReq struct
+	err := decoder.Body(r, &input)
+	if err != nil {
+		APIResponse(w, r, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	input.DateInTime, err = time.Parse(time.DateOnly, input.Date)
 	if err != nil {
 		APIResponse(w, r, err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	// Send the parsed boolean as the JSON response
-	APIResponse(w, r, isNoLimit, http.StatusOK)
+	APIResponse(w, r, input, http.StatusOK)
 }
 
 // main starts the HTTP server and handles the request.
@@ -95,29 +101,41 @@ func main() {
 	port := "1200"
 	mux := http.NewServeMux()
 
-	// Handle the "/decode-field" route
-	mux.HandleFunc("/decode-field", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("content-type", "application/json")
-		defer help.PanicRecover("main")
-
-		if r.Method == "GET" {
-			// http://localhost:1200/decode-field?is_no_limit=true
-			ServeHTTP2(w, r)
-			return
-		}
-		APIResponse(w, r, "Page not found", http.StatusNotFound)
-	})
-
 	// Handle the "/decode-struct" route
 	mux.HandleFunc("/decode-struct", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("content-type", "application/json")
 		defer help.PanicRecover("main")
 
+		// Handle GET requests
+		/*
+			curl --location 'http://localhost:1200/decode-struct?page=1&limit=5&order_by=DESC&sort_by=created_at&is_no_limit=true&total=1.2345&offset=10&date=2024-07-22'
+		*/
 		if r.Method == "GET" {
-			// http://localhost:1200/decode-struct?page=1&limit=5&order_by=DESC&sort_by=created_at&is_no_limit=true&total=1.2345&offset=10&date=2024-07-22
 			ServeHTTP(w, r)
 			return
 		}
+
+		// Handle POST requests
+		/*
+			curl --location 'http://localhost:1200/decode-struct' \
+			--header 'Content-Type: application/json' \
+			--data '{
+			    "total": 1.2345,
+			    "date": "2024-07-23",
+			    "limit": 5,
+			    "offset": 10,
+			    "page": 1,
+			    "order_by": "ASC",
+			    "sort_by": "created_at",
+			    "is_no_limit": true
+			}'
+		*/
+		if r.Method == "POST" {
+			ServeHTTP2(w, r)
+			return
+		}
+
+		// Handle other requests
 		APIResponse(w, r, "Page not found", http.StatusNotFound)
 	})
 
