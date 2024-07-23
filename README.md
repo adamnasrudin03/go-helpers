@@ -53,6 +53,7 @@ This is a helper library for the GoLang project.
 | StreamToByte | Reads the entire contents of an io.Reader and returns it as a byte slice.	|
 | GetHTTPRequestJSON | Sends an HTTP request with the given method, URL, body, and timeout, and returns the response as a byte slice. The function takes an optional set of headers to include with the request.	|
 | GetHTTPRequestSkipVerify | Sends an HTTP request with the given method, URL, body, and timeout, and returns the response as a byte slice. The function takes an optional set of headers to include with the request.	|
+| NewQueryDecoder | Creates a new queryDecoder instance with the given values.		|
 
 
 ### Time helpers
